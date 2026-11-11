@@ -1,20 +1,45 @@
-// ParallelProgrammingAssignment.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+#include "serialGE.cpp"
 #include <iostream>
+#include<random>
+#include <chrono>
+using namespace std;
+using namespace chrono;
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    while (true) {
+    size_t N;
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> dist(1, 10);
+    cout << "Enter the matrix size (N): ";
+    cin >> N;
+    // Generate random N x N matrix
+    vector<double> A(N * N);
+
+    for (size_t i = 0; i < N * N; i++) {
+        A[i] = dist(gen);
+    }
+
+
+    // Start measuring computational time
+    auto start = high_resolution_clock::now();
+
+
+    // Perform Gaussian Elimination
+    serial_ge(A, N);
+
+    // Stop measuring computational time
+    auto stop = high_resolution_clock::now();
+
+    // Calculate execution time
+    auto duration = duration_cast<microseconds>(stop - start);
+
+    cout << "\nMatrix Size: " << N << " x " << N << endl;
+    cout << "Computational Time: "
+        << duration.count() << " ms" << endl;
+}
+    return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
