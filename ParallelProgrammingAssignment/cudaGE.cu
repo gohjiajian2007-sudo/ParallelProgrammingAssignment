@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <vector>
 using namespace std;
+#define BLOCK_SIZE 256
 
 #define CUDA_CHECK(call)                                                     \
     do {                                                                     \
@@ -58,7 +59,7 @@ __global__ void eliminate_below(double* A, int N, int k) {
 // Device-side algorithm only.
 // d_A must already contain an N x N row-major matrix in device memory.
 void ge_cuda_device(double* d_A, size_t N) {
-    constexpr int block_size = 256;
+    constexpr int block_size = BLOCK_SIZE;
 
     for (int k = 0; k < N; ++k) {
         normalize_pivot_row <<<1, block_size >>> (d_A, N, k);
