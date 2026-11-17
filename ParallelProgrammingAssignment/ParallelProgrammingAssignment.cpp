@@ -1,5 +1,6 @@
 #include "serialGE.cpp"
 #include "cudaGE.h"
+#include "OpenMP_GE.h"
 #include <iostream>
 #include<random>
 #include <chrono>
@@ -28,8 +29,9 @@ int main()
     auto start = high_resolution_clock::now();
 
     // Perform Gaussian Elimination
-    ge_cuda(A, N);
-
+    //ge_cuda(A, N);
+    openMP_ge(A, N);
+    
     // Stop measuring computational time
     auto stop = high_resolution_clock::now();
 
