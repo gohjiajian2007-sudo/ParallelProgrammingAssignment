@@ -28,7 +28,7 @@ int main()
 
 
     // Perform Gaussian Elimination
-    serial_ge(A, N);
+    ge_cuda(A, N);
 
     // Stop measuring computational time
     auto stop = high_resolution_clock::now();
