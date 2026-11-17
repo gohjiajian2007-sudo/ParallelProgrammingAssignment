@@ -25,4 +25,9 @@
   <ItemGroup>
     <CudaCompile Include="cudaGE.cu" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cudaGE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

@@ -5,14 +5,15 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <vector>
+using namespace std;
 
 #define CUDA_CHECK(call)                                                     \
     do {                                                                     \
         cudaError_t err__ = (call);                                          \
         if (err__ != cudaSuccess) {                                          \
-            std::fprintf(stderr, "CUDA error: %s (%s:%d)\n",                 \
+            fprintf(stderr, "CUDA error: %s (%s:%d)\n",                 \
                          cudaGetErrorString(err__), __FILE__, __LINE__);      \
-            std::exit(EXIT_FAILURE);                                         \
+            exit(EXIT_FAILURE);                                         \
         }                                                                    \
     } while (0)
 
@@ -24,7 +25,7 @@ __global__ void normalize_pivot_row(double* A, int N, int k) {
     if (threadIdx.x == 0) {
         pivot = A[k * N + k];
     }
-    __syncthreads();
+    __syncthreads(); //synchronization barriers
 
     for (int col = k + static_cast<int>(threadIdx.x);
         col < N;
@@ -43,7 +44,7 @@ __global__ void eliminate_below(double* A, int N, int k) {
     if (threadIdx.x == 0) {
         m_shared = A[row * N + k];
     }
-    __syncthreads();
+    __syncthreads(); 
 
     const double m = m_shared;
 
@@ -73,18 +74,15 @@ void ge_cuda_device(double* d_A, size_t N) {
 }
 
 // Convenience host wrapper: allocates, copies, runs, copies back, frees.
-void ge_cuda(std::vector<double>& A, int N) {
+void ge_cuda(vector<double>& A, int N) {
+
     if (N <= 0) {
         return;
     }
 
-    const std::size_t n = static_cast<std::size_t>(N);
+    const size_t n = static_cast<size_t>(N);
 
-    if (A.size() != n * n) {
-        throw std::invalid_argument("A must be N x N");
-    }
-
-    const std::size_t bytes = n * n * sizeof(double);
+    const size_t bytes = n * n * sizeof(double);
 
     double* d_A = nullptr;
     CUDA_CHECK(cudaMalloc(reinterpret_cast<void**>(&d_A), bytes));
