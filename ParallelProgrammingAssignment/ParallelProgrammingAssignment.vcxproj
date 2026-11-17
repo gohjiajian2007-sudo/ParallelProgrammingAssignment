@@ -143,6 +143,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MPIGE.cpp" />
     <ClCompile Include="ParallelProgrammingAssignment.cpp" />
     <ClCompile Include="serialGE.cpp" />
   </ItemGroup>

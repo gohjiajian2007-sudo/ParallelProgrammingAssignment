@@ -21,6 +21,9 @@
     <ClCompile Include="serialGE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MPIGE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="cudaGE.cu" />
