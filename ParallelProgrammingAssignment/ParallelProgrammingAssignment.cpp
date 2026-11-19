@@ -1,6 +1,6 @@
 #include "serialGE.cpp"
 #include "cudaGE.h"
-#include "OpenMP_GE.h"
+#include "OpenMP_GE.cpp"
 #include <iostream>
 #include<random>
 #include <chrono>
